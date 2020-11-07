@@ -331,6 +331,7 @@ $(document).ready(function(){
   var id = $(this).attr('id');
   $('#form_result').html('');
   $(".password").hide();
+  $('#sample_form').trigger("reset");
 
   /* get all checkbox value get */
   /*var hobbyss = [];
