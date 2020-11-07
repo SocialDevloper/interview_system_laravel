@@ -85,7 +85,7 @@ class StudentController extends Controller
             'password' => Hash::make($request->password),
             'gender' => $request->gender,
             'age' => $request->age,
-            'phone_number' => $request->phone_number,
+            'phone_number' => ($request->phone_number) ? $request->phone_number : '',
             'birth_date' => date("Y-m-d", strtotime($request->birth_date)),
             'hobbies' => implode(",", $request->hobby),
             'address' => $request->address,
@@ -154,6 +154,9 @@ class StudentController extends Controller
                 return response()->json(['errors' => $error->errors()->all()]);
             }
 
+            $image_path = public_path('stud_images').'/'.$image_name;
+            unlink($image_path);
+
             $image_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('stud_images'), $image_name);
         }
@@ -183,7 +186,7 @@ class StudentController extends Controller
             'email' => $request->email,
             'gender' => $request->gender,
             'age' => $request->age,
-            'phone_number' => $request->phone_number,
+            'phone_number' => ($request->phone_number) ? $request->phone_number : '',
             'birth_date' => date("Y-m-d", strtotime($request->birth_date)),
             'hobbies' => implode(",", $request->hobby),
             'address' => $request->address,
@@ -204,6 +207,8 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $data = Student::findOrFail($id);
+        $image_path = public_path('stud_images').'/'.$data->image;
+        unlink($image_path);
         $data->delete();
     }
 }
