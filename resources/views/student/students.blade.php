@@ -195,6 +195,21 @@
 <script>
 $(document).ready(function(){
 
+  /* datepicker scrolling issue*/
+  var datePicker = $(".date").datepicker({});
+  var t ;
+  $( document ).on(
+      'DOMMouseScroll mousewheel scroll',
+      '#formModal', 
+      function(){       
+          window.clearTimeout( t );
+          t = window.setTimeout( function(){            
+              $('.date').datepicker('place')
+          }, 100 );        
+      }
+  );
+
+
   $('#formModal').on('shown.bs.modal', function() {
     $('.date').datepicker({
       format: 'dd-mm-yyyy',
